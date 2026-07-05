@@ -1,191 +1,493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profit Fast Calculator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+<title>Quick Profit Calculator</title>
 
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-        }
+<meta name="theme-color" content="#020617">
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2em;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-        }
+    background:
+    radial-gradient(circle at top left,#38bdf833,transparent 30%),
+    radial-gradient(circle at bottom right,#8b5cf633,transparent 30%),
+    #020617;
 
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
+    color:white;
+}
 
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+.card{
+    width:100%;
+    max-width:420px;
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(20px);
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:24px;
 
-        button:active {
-            transform: translateY(0);
-        }
+    padding:24px;
+}
 
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            display: none;
-        }
+h1{
+    text-align:center;
+    margin-bottom:8px;
 
-        .result.show {
-            display: block;
-        }
+    background:linear-gradient(
+    90deg,
+    #38bdf8,
+    #8b5cf6
+    );
 
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            color: #333;
-        }
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
 
-        .result-item label {
-            margin: 0;
-            font-weight: 600;
-            color: #555;
-        }
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-bottom:25px;
+    font-size:14px;
+}
 
-        .result-item .value {
-            font-weight: 700;
-            color: #667eea;
-            font-size: 1.1em;
-        }
+label{
+    display:block;
+    margin-bottom:8px;
+    margin-top:16px;
+    color:#94a3b8;
+    font-size:14px;
+}
 
-        .result-item:last-child {
-            margin-bottom: 0;
-            padding-top: 12px;
-            border-top: 2px solid #ddd;
-        }
+input{
+    width:100%;
+    padding:14px;
 
-        .result-item:last-child .value {
-            color: #28a745;
-            font-size: 1.3em;
-        }
-    </style>
+    border:none;
+    outline:none;
+
+    border-radius:12px;
+
+    background:#0f172a;
+    color:white;
+
+    font-size:16px;
+}
+
+input:focus{
+    border:1px solid #38bdf8;
+}
+
+.btn-group{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+    font-weight:bold;
+
+    color:white;
+}
+
+.calculate-btn{
+    background:linear-gradient(
+    135deg,
+    #38bdf8,
+    #8b5cf6
+    );
+}
+
+.clear-btn{
+    background:#1e293b;
+}
+
+.copy-btn{
+    background:#0f766e;
+    margin-top:10px;
+    width:100%;
+}
+
+.result{
+    margin-top:20px;
+    display:none;
+}
+
+.result-box{
+    background:#0f172a;
+    border-radius:12px;
+    padding:14px;
+    margin-top:10px;
+}
+
+.result-title{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.result-value{
+    margin-top:5px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.green{
+    color:#22c55e;
+}
+
+.red{
+    color:#ef4444;
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>📊 Profit Calculator</h1>
-        
-        <form id="calculatorForm">
-            <div class="form-group">
-                <label for="revenue">Revenue ($)</label>
-                <input type="number" id="revenue" placeholder="Enter revenue" required min="0" step="0.01">
-            </div>
 
-            <div class="form-group">
-                <label for="costs">Total Costs ($)</label>
-                <input type="number" id="costs" placeholder="Enter total costs" required min="0" step="0.01">
-            </div>
+<div class="card">
 
-            <div class="form-group">
-                <label for="taxes">Taxes ($)</label>
-                <input type="number" id="taxes" placeholder="Enter taxes" required min="0" step="0.01">
-            </div>
+<h1>Profit Calculator</h1>
+<div class="subtitle">
+Buy Low • Sell High
+</div>
 
-            <button type="submit">Calculate Profit</button>
-        </form>
+<label>Buy Price</label>
+<input
+id="buy"
+type="number"
+step="0.0001"
+placeholder="0.7128">
 
-        <div class="result" id="result">
-            <div class="result-item">
-                <label>Revenue:</label>
-                <span class="value" id="resultRevenue">$0.00</span>
-            </div>
-            <div class="result-item">
-                <label>Total Costs & Taxes:</label>
-                <span class="value" id="resultExpenses">$0.00</span>
-            </div>
-            <div class="result-item">
-                <label>Net Profit:</label>
-                <span class="value" id="resultProfit">$0.00</span>
-            </div>
-        </div>
-    </div>
+<label>Modal (RM)</label>
+<input
+id="capital"
+type="number"
+placeholder="100">
 
-    <script>
-        const form = document.getElementById('calculatorForm');
-        const resultDiv = document.getElementById('result');
+<label>Sell Price</label>
+<input
+id="sell"
+type="number"
+step="0.0001"
+placeholder="0.8127">
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+<div class="btn-group">
 
-            const revenue = parseFloat(document.getElementById('revenue').value);
-            const costs = parseFloat(document.getElementById('costs').value);
-            const taxes = parseFloat(document.getElementById('taxes').value);
+<button
+class="calculate-btn"
+onclick="calculate()">
+Calculate
+</button>
 
-            const totalExpenses = costs + taxes;
-            const netProfit = revenue - totalExpenses;
+<button
+class="clear-btn"
+onclick="clearForm()">
+Clear
+</button>
 
-            document.getElementById('resultRevenue').textContent = '$' + revenue.toFixed(2);
-            document.getElementById('resultExpenses').textContent = '$' + totalExpenses.toFixed(2);
-            document.getElementById('resultProfit').textContent = '$' + netProfit.toFixed(2);
+</div>
 
-            resultDiv.classList.add('show');
-        });
-    </script>
+<button
+class="copy-btn"
+onclick="copyResult()">
+Copy Result
+</button>
+
+<div
+class="result"
+id="result">
+
+<div class="result-box">
+<div class="result-title">
+Units Purchased
+</div>
+<div
+class="result-value"
+id="units">
+</div>
+</div>
+
+<div class="result-box">
+<div class="result-title">
+Portfolio Value
+</div>
+<div
+class="result-value"
+id="value">
+</div>
+</div>
+
+<div class="result-box">
+<div class="result-title">
+Profit
+</div>
+<div
+class="result-value"
+id="profit">
+</div>
+</div>
+
+<div class="result-box">
+<div class="result-title">
+ROI
+</div>
+<div
+class="result-value"
+id="roi">
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// Load last values
+
+window.onload = () => {
+
+["buy","capital","sell"].forEach(id => {
+
+const value =
+localStorage.getItem(id);
+
+if(value){
+
+document.getElementById(id).value =
+value;
+
+}
+
+});
+
+};
+
+// Auto select input
+
+document
+.querySelectorAll("input")
+.forEach(input => {
+
+input.addEventListener(
+"focus",
+function(){
+
+this.select();
+
+});
+
+});
+
+// Enter on Sell Price
+
+document
+.getElementById("sell")
+.addEventListener(
+"keydown",
+function(e){
+
+if(e.key==="Enter"){
+
+calculate();
+
+}
+
+});
+
+function formatRM(value){
+
+return value.toLocaleString(
+"en-MY",
+{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+}
+);
+
+}
+
+function calculate(){
+
+const buy =
+parseFloat(
+document.getElementById("buy").value
+);
+
+const capital =
+parseFloat(
+document.getElementById("capital").value
+);
+
+const sell =
+parseFloat(
+document.getElementById("sell").value
+);
+
+if(
+!buy ||
+!capital ||
+!sell
+){
+
+alert(
+"Please fill all fields"
+);
+
+return;
+
+}
+
+localStorage.setItem(
+"buy",
+buy
+);
+
+localStorage.setItem(
+"capital",
+capital
+);
+
+localStorage.setItem(
+"sell",
+sell
+);
+
+const units =
+capital / buy;
+
+const value =
+units * sell;
+
+const profit =
+value - capital;
+
+const roi =
+(profit / capital) * 100;
+
+document.getElementById(
+"units"
+).innerText =
+units.toFixed(4);
+
+document.getElementById(
+"value"
+).innerText =
+"RM " +
+formatRM(value);
+
+document.getElementById(
+"profit"
+).innerText =
+"RM " +
+formatRM(profit);
+
+document.getElementById(
+"roi"
+).innerText =
+roi.toFixed(2) + "%";
+
+const profitEl =
+document.getElementById(
+"profit"
+);
+
+const roiEl =
+document.getElementById(
+"roi"
+);
+
+if(profit >= 0){
+
+profitEl.className =
+"result-value green";
+
+roiEl.className =
+"result-value green";
+
+}else{
+
+profitEl.className =
+"result-value red";
+
+roiEl.className =
+"result-value red";
+
+}
+
+document.getElementById(
+"result"
+).style.display =
+"block";
+
+}
+
+function clearForm(){
+
+["buy","capital","sell"]
+.forEach(id => {
+
+document.getElementById(
+id
+).value = "";
+
+localStorage.removeItem(id);
+
+});
+
+document.getElementById(
+"result"
+).style.display =
+"none";
+
+}
+
+function copyResult(){
+
+const text =
+
+"Profit: " +
+document.getElementById(
+"profit"
+).innerText +
+
+"\nROI: " +
+
+document.getElementById(
+"roi"
+).innerText;
+
+navigator.clipboard
+.writeText(text);
+
+alert("Result copied!");
+
+}
+
+</script>
+
 </body>
 </html>
