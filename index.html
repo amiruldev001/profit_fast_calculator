@@ -7,164 +7,170 @@
 <title>Quick Profit Calculator</title>
 
 <meta name="theme-color" content="#020617">
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
 
-    background:
-    radial-gradient(circle at top left,#38bdf833,transparent 30%),
-    radial-gradient(circle at bottom right,#8b5cf633,transparent 30%),
-    #020617;
+background:
+radial-gradient(circle at top left,#38bdf833,transparent 30%),
+radial-gradient(circle at bottom right,#8b5cf633,transparent 30%),
+#020617;
 
-    color:white;
+color:white;
 }
 
 .card{
-    width:100%;
-    max-width:420px;
+width:100%;
+max-width:420px;
 
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(20px);
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
 
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:24px;
+border:1px solid rgba(255,255,255,.1);
+border-radius:24px;
 
-    padding:24px;
+padding:24px;
+box-shadow:0 0 30px rgba(56,189,248,.15);
 }
 
 h1{
-    text-align:center;
-    margin-bottom:8px;
+text-align:center;
+margin-bottom:8px;
 
-    background:linear-gradient(
-    90deg,
-    #38bdf8,
-    #8b5cf6
-    );
+background:linear-gradient(
+90deg,
+#38bdf8,
+#8b5cf6
+);
 
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .subtitle{
-    text-align:center;
-    color:#94a3b8;
-    margin-bottom:25px;
-    font-size:14px;
+text-align:center;
+color:#94a3b8;
+margin-bottom:25px;
+font-size:14px;
 }
 
 label{
-    display:block;
-    margin-bottom:8px;
-    margin-top:16px;
-    color:#94a3b8;
-    font-size:14px;
+display:block;
+margin-bottom:8px;
+margin-top:16px;
+color:#94a3b8;
+font-size:14px;
 }
 
 input{
-    width:100%;
-    padding:14px;
+width:100%;
+padding:14px;
 
-    border:none;
-    outline:none;
+border:none;
+outline:none;
 
-    border-radius:12px;
+border-radius:12px;
 
-    background:#0f172a;
-    color:white;
+background:#0f172a;
+color:white;
 
-    font-size:16px;
+font-size:16px;
 }
 
 input:focus{
-    border:1px solid #38bdf8;
+border:1px solid #38bdf8;
 }
 
 .btn-group{
-    display:flex;
-    gap:10px;
-    margin-top:20px;
+display:flex;
+gap:10px;
+margin-top:20px;
 }
 
 button{
-    flex:1;
+flex:1;
 
-    padding:14px;
+padding:14px;
 
-    border:none;
-    border-radius:12px;
+border:none;
+border-radius:12px;
 
-    cursor:pointer;
+cursor:pointer;
 
-    font-size:15px;
-    font-weight:bold;
+font-size:15px;
+font-weight:bold;
 
-    color:white;
+color:white;
 }
 
 .calculate-btn{
-    background:linear-gradient(
-    135deg,
-    #38bdf8,
-    #8b5cf6
-    );
+background:linear-gradient(
+135deg,
+#38bdf8,
+#8b5cf6
+);
 }
 
 .clear-btn{
-    background:#1e293b;
+background:#1e293b;
 }
 
 .copy-btn{
-    background:#0f766e;
-    margin-top:10px;
-    width:100%;
+background:#0f766e;
+margin-top:10px;
+width:100%;
 }
 
 .result{
-    margin-top:20px;
-    display:none;
+margin-top:20px;
+display:none;
 }
 
 .result-box{
-    background:#0f172a;
-    border-radius:12px;
-    padding:14px;
-    margin-top:10px;
+background:#0f172a;
+border-radius:12px;
+padding:14px;
+margin-top:10px;
 }
 
 .result-title{
-    color:#94a3b8;
-    font-size:13px;
+color:#94a3b8;
+font-size:13px;
 }
 
 .result-value{
-    margin-top:5px;
-    font-size:22px;
-    font-weight:bold;
+margin-top:5px;
+font-size:22px;
+font-weight:bold;
 }
 
 .green{
-    color:#22c55e;
+color:#22c55e;
 }
 
 .red{
-    color:#ef4444;
+color:#ef4444;
+}
+
+.install-btn{
+display:none;
+margin-top:10px;
+background:#2563eb;
+width:100%;
 }
 </style>
 </head>
@@ -174,6 +180,7 @@ button{
 <div class="card">
 
 <h1>Profit Calculator</h1>
+
 <div class="subtitle">
 Buy Low • Sell High
 </div>
@@ -218,6 +225,12 @@ Clear
 class="copy-btn"
 onclick="copyResult()">
 Copy Result
+</button>
+
+<button
+id="installBtn"
+class="install-btn">
+Install App
 </button>
 
 <div
@@ -270,159 +283,96 @@ id="roi">
 
 <script>
 
-// Load last values
+// Load saved values
 
 window.onload = () => {
 
 ["buy","capital","sell"].forEach(id => {
 
-const value =
-localStorage.getItem(id);
+const value = localStorage.getItem(id);
 
 if(value){
-
-document.getElementById(id).value =
-value;
-
+document.getElementById(id).value = value;
 }
 
 });
 
 };
 
-// Auto select input
+// Auto select input text
 
-document
-.querySelectorAll("input")
-.forEach(input => {
+document.querySelectorAll("input").forEach(input => {
 
-input.addEventListener(
-"focus",
-function(){
-
+input.addEventListener("focus", function(){
 this.select();
-
 });
 
 });
 
-// Enter on Sell Price
+// Press Enter on Sell Price
 
-document
-.getElementById("sell")
-.addEventListener(
-"keydown",
-function(e){
+document.getElementById("sell")
+.addEventListener("keydown", function(e){
 
-if(e.key==="Enter"){
-
+if(e.key === "Enter"){
 calculate();
-
 }
 
 });
 
 function formatRM(value){
 
-return value.toLocaleString(
-"en-MY",
-{
+return value.toLocaleString("en-MY",{
 minimumFractionDigits:2,
 maximumFractionDigits:2
-}
-);
+});
 
 }
 
 function calculate(){
 
 const buy =
-parseFloat(
-document.getElementById("buy").value
-);
+parseFloat(document.getElementById("buy").value);
 
 const capital =
-parseFloat(
-document.getElementById("capital").value
-);
+parseFloat(document.getElementById("capital").value);
 
 const sell =
-parseFloat(
-document.getElementById("sell").value
-);
+parseFloat(document.getElementById("sell").value);
 
-if(
-!buy ||
-!capital ||
-!sell
-){
+if(!buy || !capital || !sell){
 
-alert(
-"Please fill all fields"
-);
-
+alert("Please fill all fields");
 return;
 
 }
 
-localStorage.setItem(
-"buy",
-buy
-);
+localStorage.setItem("buy", buy);
+localStorage.setItem("capital", capital);
+localStorage.setItem("sell", sell);
 
-localStorage.setItem(
-"capital",
-capital
-);
+const units = capital / buy;
+const value = units * sell;
+const profit = value - capital;
+const roi = (profit / capital) * 100;
 
-localStorage.setItem(
-"sell",
-sell
-);
-
-const units =
-capital / buy;
-
-const value =
-units * sell;
-
-const profit =
-value - capital;
-
-const roi =
-(profit / capital) * 100;
-
-document.getElementById(
-"units"
-).innerText =
+document.getElementById("units").innerText =
 units.toFixed(4);
 
-document.getElementById(
-"value"
-).innerText =
-"RM " +
-formatRM(value);
+document.getElementById("value").innerText =
+"RM " + formatRM(value);
 
-document.getElementById(
-"profit"
-).innerText =
-"RM " +
-formatRM(profit);
+document.getElementById("profit").innerText =
+"RM " + formatRM(profit);
 
-document.getElementById(
-"roi"
-).innerText =
+document.getElementById("roi").innerText =
 roi.toFixed(2) + "%";
 
 const profitEl =
-document.getElementById(
-"profit"
-);
+document.getElementById("profit");
 
 const roiEl =
-document.getElementById(
-"roi"
-);
+document.getElementById("roi");
 
 if(profit >= 0){
 
@@ -442,29 +392,21 @@ roiEl.className =
 
 }
 
-document.getElementById(
-"result"
-).style.display =
+document.getElementById("result").style.display =
 "block";
 
 }
 
 function clearForm(){
 
-["buy","capital","sell"]
-.forEach(id => {
+["buy","capital","sell"].forEach(id => {
 
-document.getElementById(
-id
-).value = "";
-
+document.getElementById(id).value = "";
 localStorage.removeItem(id);
 
 });
 
-document.getElementById(
-"result"
-).style.display =
+document.getElementById("result").style.display =
 "none";
 
 }
@@ -474,20 +416,83 @@ function copyResult(){
 const text =
 
 "Profit: " +
-document.getElementById(
-"profit"
-).innerText +
+document.getElementById("profit").innerText +
 
 "\nROI: " +
 
-document.getElementById(
-"roi"
-).innerText;
+document.getElementById("roi").innerText;
 
-navigator.clipboard
-.writeText(text);
+navigator.clipboard.writeText(text);
 
 alert("Result copied!");
+
+}
+
+// ===== PWA INSTALL =====
+
+let deferredPrompt;
+
+const installBtn =
+document.getElementById("installBtn");
+
+window.addEventListener(
+"beforeinstallprompt",
+(e)=>{
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+installBtn.style.display = "block";
+
+});
+
+installBtn.addEventListener(
+"click",
+async ()=>{
+
+if(!deferredPrompt) return;
+
+deferredPrompt.prompt();
+
+await deferredPrompt.userChoice;
+
+deferredPrompt = null;
+
+installBtn.style.display = "none";
+
+});
+
+// Simple Service Worker
+
+if("serviceWorker" in navigator){
+
+const swCode = `
+
+self.addEventListener('install',event=>{
+self.skipWaiting();
+});
+
+self.addEventListener('fetch',event=>{
+event.respondWith(
+fetch(event.request).catch(()=>{
+return caches.match(event.request);
+})
+);
+});
+
+`;
+
+const blob =
+new Blob(
+[swCode],
+{type:'application/javascript'}
+);
+
+const swUrl =
+URL.createObjectURL(blob);
+
+navigator.serviceWorker.register(swUrl);
 
 }
 
